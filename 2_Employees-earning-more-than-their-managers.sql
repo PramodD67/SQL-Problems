@@ -42,3 +42,6 @@
 -- +----------+
 -- Explanation: Joe is the only employee who earns more than his manager.
  
+/* Write your PL/SQL query statement below */
+select e1.name as Employee   from 
+Employee e1 join Employee e2 on e1.salary >e2.salary and e1.managerid=e2.id and e1.managerid is not null ;
