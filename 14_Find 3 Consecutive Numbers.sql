@@ -1,3 +1,8 @@
+-- WE CAN USE DIFFERENT METHODS TO FIND CONSECUTIVE NUMBERS;
+-- 1. LEAD OR LAG
+-- 2. ROW_NUMBER()
+-- 3. SELF JOIN
+   
 create table numb_tbl(id number) ;
 
 insert into numb_tbl(id) values(12);
