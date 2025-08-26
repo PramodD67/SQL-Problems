@@ -52,26 +52,26 @@
 
 --QUERY:
 
-WITH filtered AS (
-  SELECT *
-  FROM Stadium
-  WHERE people >= 100
-),
-grouped AS (
-  SELECT *,
-         id - ROW_NUMBER() OVER (ORDER BY id) AS grp
-  FROM filtered
-),
-valid_groups AS (
-  SELECT grp
-  FROM grouped
-  GROUP BY grp
-  HAVING COUNT(*) >= 3
+WITH CTE0 AS (
+    SELECT * FROM 
+    STADIUM 
+    WHERE PEOPLE>=100
 )
-SELECT g.id, g.visit_date, g.people
-FROM grouped g
-JOIN valid_groups v ON g.grp = v.grp
-ORDER BY g.visit_date;
+
+, CTE1 AS (
+SELECT *, (ID-RN) AS CONS FROM (
+SELECT *, ROW_NUMBER() OVER (ORDER BY id) AS RN FROM CTE0 ) T
+)
+, 
+CTE2 AS (
+    SELECT CONS
+    FROM CTE1
+    GROUP BY CONS
+    HAVING COUNT(*)>=3
+)
+
+SELECT id,visit_date, people FROM CTE1 WHERE CONS IN ( SELECT CONS FROM CTE2);
+
 ------------------------------------------------
 
 -- 🔍 Explanation:
